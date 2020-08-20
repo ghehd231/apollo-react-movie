@@ -15,7 +15,12 @@ const GET_MOVIE = gql`
       rating
       description_intro
     }
-   
+    #SUGGESTION 같이 불러오기
+    suggestions(id: $id){
+        id
+        medium_cover_image   
+    }
+
   }
 `;
 
@@ -78,14 +83,14 @@ export default () => {
         <Title>
           {loading ? 'Loading...' : data.movie.title}
         </Title>
-        {!loading && data.movie && (
-            <>
-                <Subtitle>{data.movie.language} · {data.movie.rating}</Subtitle>
-                <Description>{data.movie.description_intro}</Description>
-            </>
-        )}
+       
+        <Subtitle>{data?.movie?.language} · {data?.movie?.rating}</Subtitle>
+        <Description>{data?.movie?.description_intro}</Description>
+
       </Column>
-      <Poster bg={data && data.movie ? data.movie.medium_cover_image : ""} ></Poster>
+      {/* data && data.movie ? data.movie.medium_cover_image : "" 
+          => Optional Chanining 코드로 변경*/}
+      <Poster bg={data?.movie?.medium_cover_image} ></Poster>
     </Container>
   );
 };
