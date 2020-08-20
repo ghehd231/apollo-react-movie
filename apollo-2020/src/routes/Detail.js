@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import styled from 'styled-components';
+import Movie from '../components/Movie';
 
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
@@ -23,7 +24,20 @@ const GET_MOVIE = gql`
 
   }
 `;
+const SuggestionContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
 
+const Suggestions = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+  width: 70%;
+  position: relative;
+  top: -50px;
+`
 const Container = styled.div`
   height: 100vh;
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);
@@ -69,15 +83,8 @@ export default () => {
   const { loading, data } = useQuery(GET_MOVIE, {
     variables: { id }, //GET_MOVIE에서 변수 id가 있어야 함으로 변수를 지정해준다
   });
-
-  //   if (loading) {
-  //     return 'loading...';
-  //   }
-
-  //   if (data && data.movie) {
-  //     return data.movie.title;
-  //   }
   return (
+    <>
     <Container>
       <Column>
         <Title>
@@ -91,6 +98,16 @@ export default () => {
       {/* data && data.movie ? data.movie.medium_cover_image : "" 
           => Optional Chanining 코드로 변경*/}
       <Poster bg={data?.movie?.medium_cover_image} ></Poster>
+      
     </Container>
+    
+    <SuggestionContainer>
+        <Suggestions>
+        {data?.suggestions?.map((m) => (
+            <Movie key={m.id} id={m.id} bg={m.medium_cover_image} />
+        ))}
+        </Suggestions>
+    </SuggestionContainer>
+    </>
   );
 };
