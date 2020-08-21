@@ -10,7 +10,7 @@ const LIKE_MOVIE = gql`
 `;
 
 const Container = styled.div`
-  height: 400px;
+  height: 300px;
   width: 100%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 7px;
@@ -24,6 +24,24 @@ const Poster = styled.div`
   background-position: center center;
 `;
 
+const Button = styled.div`
+  width: 40%;
+  height: 30px;
+  border: 1px solid #dcdcdc;
+  text-align: center;
+  cursor: pointer;
+  line-height: 30px;
+  background: ${props => (props.isLiked ? 'red' : '#dcdcdc')};
+  transition: 2s;
+  border-radius: 10px;
+  transform: ${props => (!props.isLiked ? 'translateY(0px)' : 'translateY(5px)')};
+  box-shadow: ${props => (!props.isLiked ? '0 5px #999' : '')};
+  background: linear-gradient(100deg, #dcdcdc, #ff7373);
+  top: -35px;
+  position: relative;
+  overflow: hidden;
+`;
+
 export default ({ id, bg, isLiked }) => {
   const [toggleLikeMovie] = useMutation(LIKE_MOVIE, { variables: { id: parseInt(id), isLiked } });
   return (
@@ -31,9 +49,9 @@ export default ({ id, bg, isLiked }) => {
       <Link to={`/${id}`}>
         <Poster bg={bg} />
       </Link>
-      <button onClick={toggleLikeMovie}>
-        {isLiked ? 'unLike' : 'like'}
-      </button>
+      <Button onClick={toggleLikeMovie} isLiked={isLiked}>
+        {isLiked ? 'unLike 💔' : 'like ❤️'}
+      </Button>
     </Container>
   );
 };
