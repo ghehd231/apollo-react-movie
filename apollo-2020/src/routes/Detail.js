@@ -10,11 +10,13 @@ const GET_MOVIE = gql`
     #apollo를 위한 부분
     movie(id: $id) {
       #graphql서버로 query를 보내기 위한 부분
+      id
       title
       medium_cover_image
       language
       rating
       description_intro
+      isLiked @client
     }
     #SUGGESTION 같이 불러오기
     suggestions(id: $id){
@@ -86,7 +88,7 @@ export default () => {
     <Container>
       <Column>
         <Title>
-          {loading ? 'Loading...' : data.movie.title}
+          {loading ? 'Loading...' : `${data.movie.title} ${data.movie.isLiked ? "❤️" : "💔"}`}
         </Title>
         <Subtitle>{data?.movie?.language} · {data?.movie?.rating}</Subtitle>
         <Description>{data?.movie?.description_intro}</Description>
