@@ -7,6 +7,17 @@ const client = new ApolloClient({
     Movie: {
       isLiked: () => false,
     },
+    // isLiked를 변경하기 위한 Mutation
+    Mutation: {
+      likeMovie: (_, { id }, { cache }) => {
+        cache.writeData({
+          id: `Movie:${id}`,
+          data: {
+            isLiked: true,
+          },
+        });
+      },
+    },
   },
 });
 
