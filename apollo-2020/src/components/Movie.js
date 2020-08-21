@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 const Container = styled.div`
-  height: 380px;
+  height: 400px;
   width: 100%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  overflow: hidden;
   border-radius: 7px;
+  background-color: transparent;
 `;
 const Poster = styled.div`
   background-image: url(${props => props.bg});
@@ -16,10 +16,12 @@ const Poster = styled.div`
   background-position: center center;
 `;
 
-export default ({ id, bg }) =>
+export default ({ id, bg, isLiked }) =>
   <Container>
     <Link to={`/${id}`}>
       <Poster bg={bg} />
-      {id}
     </Link>
+    <button>
+      {isLiked ? 'unLike' : 'like'}
+    </button>
   </Container>;

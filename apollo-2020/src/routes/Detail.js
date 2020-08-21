@@ -76,12 +76,10 @@ const Poster = styled.div`
   background-position: center center;
 `;
 
-export default () => {
-  //const {id} = useParams(); // 이 부분에서 타입문제(param의 id가 string) 때문에 400에러 나서 바꿔줌
-  const param = useParams();
-  const id = Number(param.id);
+export default () => { 
+  const {id} = useParams();
   const { loading, data } = useQuery(GET_MOVIE, {
-    variables: { id }, //GET_MOVIE에서 변수 id가 있어야 함으로 변수를 지정해준다
+    variables: { id: Number(id) }, //GET_MOVIE에서 변수 id가 있어야 함으로 변수를 지정해준다
   });
   return (
     <>
@@ -90,15 +88,12 @@ export default () => {
         <Title>
           {loading ? 'Loading...' : data.movie.title}
         </Title>
-       
         <Subtitle>{data?.movie?.language} · {data?.movie?.rating}</Subtitle>
         <Description>{data?.movie?.description_intro}</Description>
-
       </Column>
       {/* data && data.movie ? data.movie.medium_cover_image : "" 
           => Optional Chanining 코드로 변경*/}
-      <Poster bg={data?.movie?.medium_cover_image} ></Poster>
-      
+      <Poster bg={data?.movie?.medium_cover_image} ></Poster>  
     </Container>
     
     <SuggestionContainer>

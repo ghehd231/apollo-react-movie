@@ -10,6 +10,7 @@ const GET_MOVIES = gql`
     movies {
       id
       medium_cover_image
+      isLiked @client #telegraph ql 을 통해 isLiked가 client에 있다는 걸 알려줌
     }
   }
 `;
@@ -67,7 +68,7 @@ export default () => {
       {loading && <Loading>Loading...</Loading>}
       
       <Movies>
-          {data?.movies?.map(m => <Movie key={m.id} id={m.id} bg={m.medium_cover_image} />)}
+          {data?.movies?.map(m => <Movie key={m.id} id={m.id} bg={m.medium_cover_image} isLiked={m.isLiked} />)}
       </Movies>
       
     </Container>
