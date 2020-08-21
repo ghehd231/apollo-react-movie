@@ -8,6 +8,11 @@ const LIKE_MOVIE = gql`
     likeMovie(id: $id) @client #client에 있다고 알려줌(서버에 보내면 안되기 때문에 )
   }
 `;
+const UNLIKE_MOVIE = gql`
+  mutation unLikeMovie($id: Int!) {
+    unLikeMovie(id: $id) @client
+  }
+`;
 const Container = styled.div`
   height: 400px;
   width: 100%;
@@ -25,12 +30,13 @@ const Poster = styled.div`
 
 export default ({ id, bg, isLiked }) => {
   const [likeMovie] = useMutation(LIKE_MOVIE, { variables: { id: parseInt(id) } });
+  const [unLikeMovie] = useMutation(UNLIKE_MOVIE, { variables: { id: parseInt(id) } });
   return (
     <Container>
       <Link to={`/${id}`}>
         <Poster bg={bg} />
       </Link>
-      <button onClick={isLiked ? null : likeMovie}>
+      <button onClick={isLiked ? unLikeMovie : likeMovie}>
         {isLiked ? 'unLike' : 'like'}
       </button>
     </Container>

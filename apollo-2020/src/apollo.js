@@ -17,6 +17,14 @@ const client = new ApolloClient({
           },
         });
       },
+      unLikeMovie: (_, { id }, { cache }) => {
+        cache.writeData({
+          id: `Movie:${id}`,
+          data: {
+            isLiked: false,
+          },
+        });
+      },
     },
   },
 });
