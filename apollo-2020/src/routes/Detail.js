@@ -21,7 +21,8 @@ const GET_MOVIE = gql`
     #SUGGESTION 같이 불러오기
     suggestions(id: $id){
         id
-        medium_cover_image   
+        medium_cover_image
+        isLiked @client   
     }
 
   }
@@ -101,7 +102,7 @@ export default () => {
     <SuggestionContainer>
         <Suggestions>
         {data?.suggestions?.map((m) => (
-            <Movie key={m.id} id={m.id} bg={m.medium_cover_image} />
+            <Movie key={m.id} id={m.id} bg={m.medium_cover_image} isLiked={m.isLiked} />
         ))}
         </Suggestions>
     </SuggestionContainer>
